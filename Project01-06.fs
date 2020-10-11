@@ -14,8 +14,12 @@ module Project01_06
 // 
 
 let iter F L =
-    ()      //   TO BE IMPLEMENTED
-
+    let rec _iter F L =
+        match L with
+        | [] -> () //Return Nothing
+        | firstItem::theRest -> F firstItem
+                                _iter F theRest
+    _iter F L
 
 //[<EntryPoint>]
 let main argv =
