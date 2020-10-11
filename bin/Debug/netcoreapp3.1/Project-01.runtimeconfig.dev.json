@@ -1,8 +1,0 @@
-{
-  "runtimeOptions": {
-    "additionalProbingPaths": [
-      "C:\\Users\\theto\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\theto\\.nuget\\packages"
-    ]
-  }
-}
