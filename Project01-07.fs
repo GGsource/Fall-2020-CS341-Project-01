@@ -16,7 +16,14 @@ module Project01_07
 // 
 
 let reduce F L =
-    List.head L      //   TO BE IMPLEMENTED
+    let rec _reduce F L =
+        match L with
+        | [] -> raise(System.ArgumentException("Cannot reduce empty list."))
+        | single::[] -> single //Only item left, return it.
+        | first::second::theRest -> let newHead = F first second
+                                    let newerList = newHead::theRest
+                                    _reduce F newerList
+    _reduce F L      //   TO BE IMPLEMENTED
 
 
 //[<EntryPoint>]
