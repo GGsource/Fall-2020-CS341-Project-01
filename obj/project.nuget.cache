@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "gqDMJKpSie9GIUdqKtOI/xVK1G+y+bm2p09M7KamFWWCG5tAXC8ZLJnL4dIXzsgho6YVdGrQ0ppXSr++n2AC8w==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\theto\\source\\repos\\Project-01\\Project-01\\Project-01.fsproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\theto\\.nuget\\packages\\fsharp.core\\4.7.2\\fsharp.core.4.7.2.nupkg.sha512"
+  ],
+  "logs": []
+}
