@@ -23,7 +23,7 @@ let reduce F L =
         | first::second::theRest -> let newHead = F first second
                                     let newerList = newHead::theRest
                                     _reduce F newerList
-    _reduce F L      //   TO BE IMPLEMENTED
+    _reduce F L
 
 
 //[<EntryPoint>]
