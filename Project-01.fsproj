@@ -1,11 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <RootNamespace>Project_01</RootNamespace>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>Project_01</RootNamespace>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Include="Project01-01.fs" />
     <Compile Include="Project01-02.fs" />
@@ -31,7 +29,4 @@
     <None Include="ProjectOne.fsproj" />
     <Compile Include="Program.fs" />
   </ItemGroup>
-
-  <ItemGroup />
-
 </Project>

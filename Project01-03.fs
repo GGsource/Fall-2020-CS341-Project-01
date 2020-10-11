@@ -20,7 +20,7 @@ let rec _min L minSoFar =
     | [] -> minSoFar
     | currentItem::theRest when currentItem < minSoFar -> _min theRest currentItem
     | _::theRest -> _min theRest minSoFar
-
+//Helper Function
 let min L =
     match L with
     | [] -> raise (System.ArgumentException("List cannot be empty."))

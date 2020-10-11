@@ -14,9 +14,18 @@ module Project01_04
 //           nth ['q'; 'w'; 'e'; 'r'; 't'; 'y'] 5 => 'y'
 // You may not call List.nth, List.Item, .[], etc directly in your solution.
 // 
-
-let rec nth L n =
-    List.head L      //   TO BE IMPLEMENTED
+//Helper Func
+let rec _nth L n =
+    match L with
+    | [] -> raise(System.ArgumentException("Index cannot be greater than list size.")) //List is now empty meaning index was greater than size.
+    | _ when n < 0 -> raise(System.ArgumentException("Index cannot be negative.")) //Given index negative, error.
+    | head::theRest when n = 0 -> head //n has reached 0 so head is our item!
+    | _::theRest -> _nth theRest (n-1)
+//Main Func
+let nth L n =
+    match L with
+    | [] -> raise (System.ArgumentException("List cannot be empty."))
+    | _ -> _nth L n
 
 //[<EntryPoint>]
 let main argv =
