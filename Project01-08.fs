@@ -16,8 +16,17 @@ module Project01_08
 // You may not call List.fold directly in your solution.
 // 
 
-let rec fold F start L =
-    start    //   TO BE IMPLEMENTED
+//Helper Func!
+let rec _fold F start L =
+    match L with
+    | [] -> start
+    | firstItem::theRest -> let newHead = F start firstItem
+                            _fold F newHead theRest
+//Main Func
+let fold F start L =
+    match L with
+    | [] -> start //List is empty so just return start.
+    | _ -> _fold F start L
 
 
 //[<EntryPoint>]
