@@ -15,8 +15,15 @@ module Project01_05
 // You may not call List.map directly in your solution.
 // 
 
+//Main Funcwith helper inside
 let map F L =
-    []     //   TO BE IMPLEMENTED
+    let rec _map F L newList =
+        match L with
+        | [] -> newList
+        | firstItem::theRest -> let newerList = (F firstItem)::newList
+                                _map F theRest newerList
+    _map F L []
+    |> List.rev //Our list was created backwards so flip it!
 
 
 //[<EntryPoint>]
