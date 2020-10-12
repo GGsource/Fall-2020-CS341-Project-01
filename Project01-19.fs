@@ -8,6 +8,14 @@ let withinTolerance num target tolerance =
      (num < (target+tolerance))
     )
 
+//Copied from Project01-18.fs
+let inline distanceFromOrigin (x,y) =
+    match (x,y) with
+    | (_,_) ->  let xSquared = abs (x * x)
+                let ySquared = abs (y * y)
+                let sqrSum = xSquared + ySquared
+                sqrt (float sqrSum) 
+
 //
 // lengthsFromOrigin L
 //
@@ -22,7 +30,13 @@ let withinTolerance num target tolerance =
 //
 
 let lengthsFromOrigin L =
-    []     //   TO BE IMPLEMENTED
+    let rec _lengthsFromOrigin L lenList =
+        match L with
+        | [] -> (lenList|>List.rev)
+        | frontTuple::otherTups ->  let newLen = distanceFromOrigin frontTuple
+                                    let newLenList = (newLen::lenList)
+                                    _lengthsFromOrigin otherTups newLenList
+    _lengthsFromOrigin L []
 
 //[<EntryPoint>]
 let main argv =
