@@ -16,8 +16,13 @@ module Project01_16
 // You may not use List.filter directly in your solution.
 //
 
-let rec filter F L =
-    []     //   TO BE IMPLEMENTED
+let filter F L =
+    let rec _filter F L trueList =
+        match L with
+        | [] -> (trueList|>List.rev)
+        | frontItem::theRest when (F frontItem) = true -> _filter F theRest (frontItem::trueList)
+        | frontItem::theRest -> _filter F theRest trueList
+    _filter F L []
 
 
 //[<EntryPoint>]
