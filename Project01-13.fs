@@ -12,9 +12,12 @@ module Project01_13
 //       range2 -2 3 => [-2; -1; 0; 1; 2]
 //
 
-let range2 start stop =
-    []     //   TO BE IMPLEMENTED
-
+let range2 start stop  =
+    let rec _range2 start stop numList =
+        match start with
+        | _ when start = stop -> (numList|>List.rev)
+        | _ -> _range2 (start + 1) stop ((start)::numList)
+    _range2 start stop []
 
 //[<EntryPoint>]
 let main argv =

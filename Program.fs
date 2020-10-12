@@ -16,7 +16,7 @@ open Project01_09
 open Project01_10
 open Project01_11
 open Project01_12
-//open Project01_13
+open Project01_13
 //open Project01_14
 //open Project01_15
 //open Project01_16
@@ -48,7 +48,7 @@ let main argv =
     ignore (Project01_10.main [])
     ignore (Project01_11.main [])
     ignore (Project01_12.main [])
-    // ignore (Project01_13.main [])
+    ignore (Project01_13.main [])
     // ignore (Project01_14.main [])
     // ignore (Project01_15.main [])
     // ignore (Project01_16.main [])
