@@ -15,7 +15,15 @@ module Project01_15
 //
 
 let slice L start stop =
-    []     //   TO BE IMPLEMENTED
+    let rec _slice L start stop currentIndex sliceList =
+        match L with
+        | _ when start > stop -> sliceList
+        | _ when start = stop -> (sliceList|>List.rev)
+        | [] -> raise(System.ArgumentException("List was empty or starting index was larger than list size."))
+        | frontItem::theRest when currentIndex < start -> _slice theRest start stop (currentIndex+1) sliceList
+        | frontItem::theRest when (currentIndex = start && start < stop) -> _slice theRest (start+1) stop (currentIndex+1) (frontItem::sliceList)
+        | _ -> raise(System.ArgumentException("Uh oh. Something went very wrong!"))
+    _slice L start stop 0 []
 
 
 //[<EntryPoint>]
