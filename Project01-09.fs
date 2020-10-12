@@ -40,9 +40,6 @@ let flatten L =
 let main argv =
     printfn "Testing Project 09: flatten"
 
-    let myFlatten = flatten [ [1;2]; [3;4]; [5;6] ]
-    printfn "%A" myFlatten
-
     let f1 = flatten [[]]
     if f1 = [] then
         printfn "Passed!"
