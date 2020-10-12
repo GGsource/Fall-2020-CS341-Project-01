@@ -1,7 +1,7 @@
 ﻿module main
 
 // To test the Project01-ALL File
-//open Project01
+open Project01
 
 // To test the individual Project files
 //open Project01_01
@@ -22,7 +22,7 @@
 //open Project01_16
 //open Project01_17
 //open Project01_18
-open Project01_19
+//open Project01_19
 //open Project01_20
 
 
@@ -34,7 +34,7 @@ open Project01_19
 [<EntryPoint>]
 let main argv =
     // Running all the tests from Project01-ALL.fs
-    //ignore (Project01.main [])
+    ignore (Project01.main [])
     // Testing the functions file by file
     //ignore (Project01_01.main [])
     //ignore (Project01_02.main [])
@@ -54,7 +54,7 @@ let main argv =
     // ignore (Project01_16.main [])
     // ignore (Project01_17.main [])
     // ignore (Project01_18.main [])
-    ignore (Project01_19.main [])
+    // ignore (Project01_19.main [])
     // ignore (Project01_20.main [])
     0 // return an integer exit code
 

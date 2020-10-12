@@ -40,8 +40,12 @@ let matchTuples a b =
 //           length ["List"; "of"; "strings"] => 3
 //
 
-let rec length L =
-    0     //   TO BE IMPLEMENTED
+let length L =
+    let rec _length L lenSoFar =
+        match L with
+        | []            -> lenSoFar
+        | item::theRest -> _length theRest (lenSoFar + 1)
+    _length L 0
 
 //------------------------------------------------------------
 
@@ -62,8 +66,17 @@ let rec length L =
 //           max ['a'; 'e'; 'c'] => e
 //
 
+//Helper Function!
+let rec _max L maxSoFar =
+    match L with
+    | [] -> maxSoFar
+    | currentItem::theRest when currentItem > maxSoFar -> _max theRest currentItem
+    | _::theRest -> _max theRest maxSoFar
+//Main Function :D
 let max L =
-    List.head L     //   TO BE IMPLEMENTED
+    match L with
+    | [] -> raise (System.ArgumentException("List cannot be empty."))
+    | head::restOfList -> _max restOfList head
 
 //-------------------------------------------------------------
 
@@ -83,8 +96,17 @@ let max L =
 //           min ['d', 'r', 'b'] => b
 //
 
+//Helper Function!
+let rec _min L minSoFar =
+    match L with
+    | [] -> minSoFar
+    | currentItem::theRest when currentItem < minSoFar -> _min theRest currentItem
+    | _::theRest -> _min theRest minSoFar
+//Helper Function
 let min L =
-    List.head L      //   TO BE IMPLEMENTED
+    match L with
+    | [] -> raise (System.ArgumentException("List cannot be empty."))
+    | head::restOfList -> _min restOfList head
 
 //-------------------------------------------------------------
 
@@ -104,8 +126,18 @@ let min L =
 //           nth ['q'; 'w'; 'e'; 'r'; 't'; 'y'] 5 =>'y'
 // You may not call List.nth, List.Item, .[], etc directly in // your solution.
 
-let rec nth L n =
-    List.head L      //   TO BE IMPLEMENTED
+//Helper Func
+let rec _nth L n =
+    match L with
+    | [] -> raise(System.ArgumentException("Index cannot be greater than list size.")) //List is now empty meaning index was greater than size.
+    | _ when n < 0 -> raise(System.ArgumentException("Index cannot be negative.")) //Given index negative, error.
+    | head::theRest when n = 0 -> head //n has reached 0 so head is our item!
+    | _::theRest -> _nth theRest (n-1)
+//Main Func
+let nth L n =
+    match L with
+    | [] -> raise (System.ArgumentException("List cannot be empty."))
+    | _ -> _nth L n
 
 //-------------------------------------------------------------
 
@@ -127,8 +159,13 @@ let rec nth L n =
 //
 
 let map F L =
-    []     //   TO BE IMPLEMENTED
-
+    let rec _map F L newList =
+        match L with
+        | [] -> newList
+        | firstItem::theRest -> let newerList = (F firstItem)::newList
+                                _map F theRest newerList
+    _map F L []
+    |> List.rev //Our list was created backwards so flip it!
 
 //-------------------------------------------------------------
 
@@ -147,7 +184,12 @@ let map F L =
 //
 
 let iter F L =
-    ()      //   TO BE IMPLEMENTED
+    let rec _iter F L =
+        match L with
+        | [] -> () //Return Nothing
+        | firstItem::theRest -> F firstItem
+                                _iter F theRest
+    _iter F L
 
 //-------------------------------------------------------------
 
@@ -168,7 +210,14 @@ let iter F L =
 //
 
 let reduce F L =
-    List.head L      //   TO BE IMPLEMENTED
+    let rec _reduce F L =
+        match L with
+        | [] -> raise(System.ArgumentException("Cannot reduce empty list."))
+        | single::[] -> single //Only item left, return it.
+        | first::second::theRest -> let newHead = F first second
+                                    let newerList = newHead::theRest
+                                    _reduce F newerList
+    _reduce F L
 
 //-------------------------------------------------------------
 
@@ -192,8 +241,17 @@ let reduce F L =
 //          fold (fun x y -> x*y) 1 [23; 5; 80] => 9200
 //
 
-let rec fold F start L =
-    start    //   TO BE IMPLEMENTED
+//Helper Func!
+let rec _fold F start L =
+    match L with
+    | [] -> start
+    | firstItem::theRest -> let newHead = F start firstItem
+                            _fold F newHead theRest
+//Main Func
+let fold F start L =
+    match L with
+    | [] -> start //List is empty so just return start.
+    | _ -> _fold F start L
 
 //-------------------------------------------------------------
 
@@ -215,9 +273,13 @@ let rec fold F start L =
 //                  ['o'; 'n'; ' '; 'w'; 'i'; 'n'; 'g'; 's']
 //
 
+let rec _flatten L combinedList =
+        match L with
+        | [] -> combinedList
+        | firstList::otherLists -> _flatten otherLists (combinedList@firstList)
+//Main Func
 let flatten L =
-    []     //   TO BE IMPLEMENTED
-
+    _flatten L []
 
 //-------------------------------------------------------------
 
@@ -240,8 +302,13 @@ let flatten L =
 //
 
 let zip L1 L2 =
-    []     //   TO BE IMPLEMENTED
-
+    let rec _zip L1 L2 LF =
+        match (L1, L2) with
+        | ([], []) -> LF
+        | ([], _) | (_, []) -> raise(System.ArgumentException("List 1 and List 2 are not of equal size."))
+        | (item1::theRest1, item2::theRest2) -> let newTuple = (item1, item2)
+                                                _zip theRest1 theRest2 (newTuple::LF)
+    _zip L1 L2 [] |> List.rev
 
 //-------------------------------------------------------------
 
@@ -263,8 +330,14 @@ let zip L1 L2 =
 //
 
 let unzip L =
-    ([],[])     //   TO BE IMPLEMENTED
-
+    let rec _unzip L listOne listTwo =
+        match L with
+        | [] -> (listOne|>List.rev, listTwo|>List.rev)
+        | firstTuple::otherTuples -> let (left,right) = firstTuple
+                                     let newLeft = (left::listOne)
+                                     let newRight = (right::listTwo) 
+                                     _unzip otherTuples newLeft newRight
+    _unzip L [] []
 
 //-------------------------------------------------------------
 
@@ -284,8 +357,11 @@ let unzip L =
 //
 
 let rec range stop  =
-    []     //   TO BE IMPLEMENTED
-
+    let rec _range stop numList =
+        match stop with
+        | 0 -> numList
+        | _ -> _range (stop-1) ((stop-1)::numList)
+    _range stop []
 
 //-------------------------------------------------------------
 
@@ -306,9 +382,12 @@ let rec range stop  =
 //       range2 -2 3 => [-2; -1; 0; 1; 2]
 //
 
-let range2 start stop =
-    []     //   TO BE IMPLEMENTED
-
+let range2 start stop  =
+    let rec _range2 start stop numList =
+        match start with
+        | _ when start = stop -> (numList|>List.rev)
+        | _ -> _range2 (start + 1) stop ((start)::numList)
+    _range2 start stop []
 
 //-------------------------------------------------------------
 
@@ -330,7 +409,11 @@ let range2 start stop =
 //
 
 let range3 start stop step =
-    []    //TO BE IMPLEMENTED
+    let rec _range3 start stop step numList =
+        match start with
+        | _ when start = stop -> (numList|>List.rev)
+        | _ -> _range3 (start + step) stop step ((start)::numList)
+    _range3 start stop step []
 
 
 //-------------------------------------------------------------
@@ -353,8 +436,15 @@ let range3 start stop step =
 //
 
 let slice L start stop =
-    []     //   TO BE IMPLEMENTED
-
+    let rec _slice L start stop currentIndex sliceList =
+        match L with
+        | _ when start > stop -> sliceList
+        | _ when start = stop -> (sliceList|>List.rev)
+        | [] -> raise(System.ArgumentException("List was empty or starting index was larger than list size."))
+        | frontItem::theRest when currentIndex < start -> _slice theRest start stop (currentIndex+1) sliceList
+        | frontItem::theRest when (currentIndex = start && start < stop) -> _slice theRest (start+1) stop (currentIndex+1) (frontItem::sliceList)
+        | _ -> raise(System.ArgumentException("Uh oh. Something went very wrong!"))
+    _slice L start stop 0 []
 
 //-------------------------------------------------------------
 
@@ -377,9 +467,13 @@ let slice L start stop =
 //                                              -> [("Cat", 10); ("Deer", 3)]
 //
 
-let rec filter F L =
-    []     //   TO BE IMPLEMENTED
-
+let filter F L =
+    let rec _filter F L trueList =
+        match L with
+        | [] -> (trueList|>List.rev)
+        | frontItem::theRest when (F frontItem) = true -> _filter F theRest (frontItem::trueList)
+        | frontItem::theRest -> _filter F theRest trueList
+    _filter F L []
 
 //-------------------------------------------------------------
 
@@ -399,8 +493,13 @@ let rec filter F L =
 //
 
 let pairUp L =
-    []     //   TO BE IMPLEMENTED
-
+    let rec _pairUp L pairList =
+        match L with
+        | [] -> (pairList|>List.rev)
+        | itemOne::[] -> (pairList|>List.rev)
+        | itemOne::itemTwo::theRest -> let newTuple = (itemOne, itemTwo)
+                                       _pairUp theRest (newTuple::pairList)
+    _pairUp L []
 
 //-------------------------------------------------------------
 
@@ -421,8 +520,11 @@ let pairUp L =
 //
 
 let inline distanceFromOrigin (x,y) =
-    0.0     //   TO BE IMPLEMENTED
-
+    match (x,y) with
+    | (_,_) ->  let xSquared = abs (x * x)
+                let ySquared = abs (y * y)
+                let sqrSum = xSquared + ySquared
+                sqrt (float sqrSum) 
 
 //-------------------------------------------------------------
 
@@ -441,7 +543,13 @@ let inline distanceFromOrigin (x,y) =
 //
 
 let lengthsFromOrigin L =
-    []     //   TO BE IMPLEMENTED
+    let rec _lengthsFromOrigin L lenList =
+        match L with
+        | [] -> (lenList|>List.rev)
+        | frontTuple::otherTups ->  let newLen = distanceFromOrigin frontTuple
+                                    let newLenList = (newLen::lenList)
+                                    _lengthsFromOrigin otherTups newLenList
+    _lengthsFromOrigin L []
 
 
 //-------------------------------------------------------------
