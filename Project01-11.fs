@@ -49,7 +49,6 @@ let main argv =
     else
         printfn "Failed!"
         
-    printfn "%A, %A" u31 u32
     printfn ""
     0 // return an integer exit code
     
