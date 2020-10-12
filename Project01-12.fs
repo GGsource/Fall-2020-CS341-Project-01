@@ -12,7 +12,11 @@ module Project01_12
 //
 
 let rec range stop  =
-    []     //   TO BE IMPLEMENTED
+    let rec _range stop numList =
+        match stop with
+        | 0 -> numList
+        | _ -> _range (stop-1) ((stop-1)::numList)
+    _range stop []
 
 
 //[<EntryPoint>]
