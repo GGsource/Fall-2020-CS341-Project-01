@@ -16,6 +16,14 @@ let matchTuples a b =
          ||
         ((x1=ansX2) && (x2=ansX1) && (y1=ansY2) && (y2=ansY1))
 
+//Added by me
+let inline distanceFromOrigin (x,y) =
+    match (x,y) with
+    | (_,_) ->  let xSquared = abs (x * x)
+                let ySquared = abs (y * y)
+                let sqrSum = xSquared + ySquared
+                sqrt (float sqrSum) 
+
 //
 // furthestPoints L
 //
@@ -30,12 +38,34 @@ let matchTuples a b =
 //          furthestPoints [(2.0,1.5);(3.0,-1.0);(4.0,0.5);(3.0,1.0)] -> 
 //                         ((2.0,1.5),(3.0,-1.0))
 //
+let inline whichBigger num1 num2 =
+    match num1 with
+    | _ when num1 > num2 -> num1
+    | _ -> num2
+
+let rec _specificComparison L specificTup biggestDist furthestTups =
+    match L with
+    | [] ->
+    | frontTup::theRest ->  let (x1, y1) = specificTup
+                            let (x2, y2) = frontTup
+                            let xDif = x1 - x2
+                            let yDif = y1 - y2
+                            let pairedDif = (xDif, yDif)
+                            let newDist = distanceFromOrigin pairedDif
+                            let betterDist = whichBigger newDist biggestDist
+                            
+
+
+
+let rec _furthestPoints L otherTups currComparingTup currFurthestTups =
+    match L with
+    | frontTuple::otherTuples -> _specificComparison L 
 
 let furthestPoints L =
     match L with
     | [] -> raise (new ArgumentException("furthestPoints requires at least two points"))
     | _::[] -> raise (new ArgumentException("furthestPoints requires at least two points"))
-    | _ -> ((0.0,0.0),(0.0,0.0))     //   TO BE IMPLEMENTED
+    | _ -> _furthestPoints L 
 
 //[<EntryPoint>]
 let main argv =
