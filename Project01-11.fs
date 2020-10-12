@@ -17,7 +17,14 @@ module Project01_11
 // 
 
 let unzip L =
-    ([],[])     //   TO BE IMPLEMENTED
+    let rec _unzip L listOne listTwo =
+        match L with
+        | [] -> (listOne|>List.rev, listTwo|>List.rev)
+        | firstTuple::otherTuples -> let (left,right) = firstTuple
+                                     let newLeft = (left::listOne)
+                                     let newRight = (right::listTwo) 
+                                     _unzip otherTuples newLeft newRight
+    _unzip L [] []
 
 
 //[<EntryPoint>]
@@ -42,6 +49,7 @@ let main argv =
     else
         printfn "Failed!"
         
+    printfn "%A, %A" u31 u32
     printfn ""
     0 // return an integer exit code
     
