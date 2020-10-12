@@ -16,7 +16,13 @@ module Project01_17
 //
 
 let pairUp L =
-    []     //   TO BE IMPLEMENTED
+    let rec _pairUp L pairList =
+        match L with
+        | [] -> (pairList|>List.rev)
+        | itemOne::[] -> (pairList|>List.rev)
+        | itemOne::itemTwo::theRest -> let newTuple = (itemOne, itemTwo)
+                                       _pairUp theRest (newTuple::pairList)
+    _pairUp L []
 
 //[<EntryPoint>]
 let main argv =
