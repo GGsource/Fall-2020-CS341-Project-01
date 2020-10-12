@@ -18,7 +18,13 @@ module Project01_10
 // 
 
 let zip L1 L2 =
-    []     //   TO BE IMPLEMENTED
+    let rec _zip L1 L2 LF =
+        match (L1, L2) with
+        | ([], []) -> LF
+        | ([], _) | (_, []) -> raise(System.ArgumentException("List 1 and List 2 are not of equal size."))
+        | (item1::theRest1, item2::theRest2) -> let newTuple = (item1, item2)
+                                                _zip theRest1 theRest2 (newTuple::LF)
+    _zip L1 L2 [] |> List.rev
 
 
 //[<EntryPoint>]
