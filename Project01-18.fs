@@ -24,7 +24,12 @@ let withinTolerance num target tolerance =
 //
 
 let inline distanceFromOrigin (x,y) =
-    0.0     //   TO BE IMPLEMENTED
+    match (x,y) with
+    | (_,_) ->  let xSquared = abs (x * x)
+                let ySquared = abs (y * y)
+                let sqrSum = xSquared + ySquared
+                sqrt (float sqrSum) 
+
 
 //[<EntryPoint>]
 let main argv =
