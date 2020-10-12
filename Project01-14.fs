@@ -15,7 +15,8 @@ module Project01_14
 let range3 start stop step =
     let rec _range3 start stop step numList =
         match start with
-        | _ when start = stop -> (numList|>List.rev)
+        | _ when ((start >= stop) && (step > 0)) -> (numList|>List.rev)
+        | _ when ((start <= stop) && (step < 0)) -> (numList|>List.rev)
         | _ -> _range3 (start + step) stop step ((start)::numList)
     _range3 start stop step []
 
